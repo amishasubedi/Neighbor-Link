@@ -7,6 +7,7 @@ import {
 
 import Header from './components/Navigation/Header';
 import HomePage from './pages/Homepage';
+import PostItem from './pages/PostItem';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         <Header />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
+        </Routes>
+        <Routes>
+          <Route path = "/post" element = {<PostItem />} />
         </Routes>
       </div>
     </BrowserRouter>
