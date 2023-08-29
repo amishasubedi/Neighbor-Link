@@ -1,0 +1,67 @@
+.homepage {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to bottom, #1a2a6c, #3f529c);
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #1a2a6c;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Features/Benefits Section */
+.features-section {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.feature {
+    text-align: center;
+}
+
+.icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+    background-color: #f7f7f7;
+}
