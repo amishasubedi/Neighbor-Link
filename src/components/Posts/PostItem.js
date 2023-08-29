@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { ref, push } from 'firebase/database';
+import { database } from '../../dbConfig';
+
 import './PostItem.css';  
 
 const PostItem = () => {
@@ -11,10 +14,19 @@ const PostItem = () => {
         setPostData({ ...postData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    // send data to firebase
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(postData); // send to firebase later (post)
+        try {
+            const postsRef = ref(database, 'posts');
+            await push(postsRef, postData);
+            console.log('Post sent to Firebase:', postData);
+            setPostData({ title: '', content: '' });
+        } catch (error) {
+            console.error('Error sending post to Firebase:', error);
+        }
     };
+    
 
     return (
         <div className="post-container">
@@ -39,7 +51,7 @@ const PostItem = () => {
                         onChange={handleChange} 
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
         </div>
     );

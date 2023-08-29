@@ -7,7 +7,8 @@ import {
 
 import Header from './components/Navigation/Header';
 import HomePage from './pages/Homepage';
-import PostItem from './pages/PostItem';
+import PostItem from './components/Posts/PostItem';
+import ChatPage from './pages/Chatpage';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path = "/post" element = {<PostItem />} />
+        </Routes>
+        <Routes>
+          <Route path = "/chat" element = {<ChatPage />} />
         </Routes>
       </div>
     </BrowserRouter>
