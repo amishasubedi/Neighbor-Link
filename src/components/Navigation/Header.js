@@ -1,28 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
   return (
     <div className="header">
-      <div className="logo">CommuneLink</div>
+      <Link to = "/" className="logo">CommuneLink</Link>
       <div className="nav-items">
-        <a href="/home">Home</a>
-        <a href="/post">Post</a>
+        <Link to="/post">Post</Link>
         <select>
           <option>Current Location</option>
           <option>City Center</option>
           <option>North District</option>
-          {/* Add other districts or predefined areas */}
         </select>
-        <a href="/chat">Chat</a>
+        <Link to="/chat">Chat</Link>
         <div className="dropdown">
           Profile
           <div className="dropdown-content">
-            <a href="/profile">View Profile</a>
-            <a href="/myposts">My Posts</a>
-            <a href="/trustscore">Trust Score</a>
-            <a href="/settings">Settings</a>
-            <a href="/logout">Logout</a>
+            <Link to="/profile">View Profile</Link>
+            <Link to="/myposts">My Posts</Link>
+            <Link to="/trustscore">Trust Score</Link>
+            <Link to="/settings">Settings</Link>
+            <Link to="/logout">Logout</Link>
           </div>
         </div>
       </div>

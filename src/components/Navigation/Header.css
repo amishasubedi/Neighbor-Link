@@ -19,6 +19,8 @@
     /* This sets a gap between the items in the navigation */
 }
 
+
+
 .nav-items a {
     color: #ffffff;
     text-decoration: none;
@@ -29,7 +31,6 @@
 
 .nav-items a:hover {
     background-color: #3f529c;
-    /* Slightly different shade on hover */
 }
 
 .dropdown {
@@ -56,4 +57,12 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.logo {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
