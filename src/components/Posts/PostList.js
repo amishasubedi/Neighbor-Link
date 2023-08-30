@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, update, get} from 'firebase/database';
-import './PostList.css';
-import { useAuth } from '../Authentication/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import LikeAndComment from './LikeAndComment';
+import { useAuth } from '../Authentication/AuthContext';
+
+import './PostList.css';
+
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -10,8 +13,6 @@ const PostList = () => {
     const [likedPosts, setLikedPosts] = useState([]);
 
     const navigate = useNavigate();
-
-    
 
     useEffect(() => {
         const db = getDatabase();
@@ -23,7 +24,6 @@ const PostList = () => {
             
             for (let key in data) {
                 const postData = data[key];
-    
                 loadedPosts.push({
                     id: key,
                     title: postData.title,
@@ -32,8 +32,6 @@ const PostList = () => {
                     likes: postData.likes
                 });
             }
-    
-            console.log("Loaded post: " + loadedPosts[0])
             setPosts(loadedPosts);
         });
     }, []);
@@ -41,7 +39,6 @@ const PostList = () => {
     // Load liked posts for the current user
     useEffect(() => {
         if (currentUser) {
-            console.log("Here current user exists")
             const db = getDatabase();
             const userLikesRef = ref(db, `users/${currentUser.userId}/likes`);
             
@@ -51,8 +48,7 @@ const PostList = () => {
                 setLikedPosts(likedPostsList);
             });
         } else {
-             console.log("does not exist");
-            // navigate('/login'); // direct navigate to login, but show posts
+            console.log("User does not exist");
         }
     }, [currentUser]);
 
@@ -137,9 +133,6 @@ const PostList = () => {
     };
     
     
-    
-    
-    
     return (
         <div className='post-list-container'>
             {posts.map(post => (
@@ -152,20 +145,25 @@ const PostList = () => {
                         <h5 className='post-author'>{post.username}</h5>
                         <h3 className="post-title">{post.title}</h3>
                         <p className="post-text">{post.content}</p>
-                        <div className="post-likes">
-                        <span>{post.likes || 0} likes</span>
-                        <button type="button" onClick={(event) => handleLike(event, post.id)}>
-                            {likedPosts.includes(post.id) ? 'Unlike' : 'Like'}
-                        </button>
-
-                    </div>
+                        <LikeAndComment 
+                            post={post} 
+                            currentUser={currentUser}
+                            likedPosts={likedPosts}
+                            setLikedPosts={setLikedPosts}
+                            posts={posts}
+                            setPosts={setPosts}
+                            handleLike={handleLike}
+                            navigate = {navigate}
+                        />
                     </div>
                 </div>
             ))}
         </div>
     );
-    
 };
+
+
+
 
 export default PostList;
 
