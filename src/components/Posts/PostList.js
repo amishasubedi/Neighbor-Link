@@ -69,55 +69,74 @@ const PostList = () => {
     };
 
     const handleLike = async (event, postId) => {
-        event.preventDefault();
         if (!currentUser) {
-            alert("Please login or signup to like the post")
             navigate('/login');
-            return; 
+            return; // Return early if user is not logged in
         }
-        //(not valid in async) event.preventDefault();
+    
         const db = getDatabase();
         const postRef = ref(db, `posts/${postId}`);
         const currentUserRef = ref(db, `users/${currentUser.userId}`);
-    
-        try {
-            if (!likedPosts.includes(postId)) {
-                // Fetch the current likes count of the post
-                const postSnapshot = await get(postRef);
-                const currentLikes = postSnapshot.val().likes || 0;
-
-                console.log("current likes: " + currentLikes)
         
+        try {
+            const postSnapshot = await get(postRef);
+            const currentLikes = postSnapshot.val().likes || 0;
+    
+            if (!likedPosts.includes(postId)) {
                 // Update the likes count in the database
                 await update(postRef, {
                     likes: currentLikes + 1
                 });
-        
-                // Update the user's trust score by 2 points
+    
+                // Update the user's trust score
                 const currentUserSnapshot = await get(currentUserRef);
-                const currentTrustScore = currentUserSnapshot.val().trustScore || 0;
-        
-                await update(currentUserRef, {
-                    trustScore: currentTrustScore + 2
-                });
-        
+    
+                if (currentUserSnapshot.exists()) {
+                    const currentTrustScore = currentUserSnapshot.val().trustScore || 0;
+            
+                    await update(currentUserRef, {
+                        trustScore: currentTrustScore + 2
+                    });
+                }
+    
                 // Update likedPosts state
                 setLikedPosts([...likedPosts, postId]);
-        
-                // Fetch the updated posts data
-                const updatedPosts = posts.map(post => {
-                    if (post.id === postId) {
-                        return { ...post, likes: currentLikes + 1 };
-                    }
-                    return post;
+            } else {
+                // Decrease the likes count and remove postId from likedPosts state
+                await update(postRef, {
+                    likes: currentLikes - 1
                 });
-        
-                setPosts(updatedPosts);
+    
+                // Update the user's trust score
+                const currentUserSnapshot = await get(currentUserRef);
+    
+                if (currentUserSnapshot.exists()) {
+                    const currentTrustScore = currentUserSnapshot.val().trustScore || 0;
+            
+                    await update(currentUserRef, {
+                        trustScore: currentTrustScore - 2
+                    });
+                }
+    
+                // Update likedPosts state
+                setLikedPosts(likedPosts.filter(id => id !== postId));
             }
+    
+            // Fetch the updated posts data
+            const updatedPosts = posts.map(post => {
+                if (post.id === postId) {
+                    return { ...post, likes: currentLikes + (likedPosts.includes(postId) ? -1 : 1) };
+                }
+                return post;
+            });
+    
+            setPosts(updatedPosts);
         } catch (error) {
             console.error('Error updating likes and trust score:', error);
         }
     };
+    
+    
     
     
     
