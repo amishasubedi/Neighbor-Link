@@ -7,21 +7,16 @@ const Header = () => {
     <div className="header">
       <Link to = "/" className="logo">CommuneLink</Link>
       <div className="nav-items">
-        <Link to="/post">Post</Link>
-        <select>
-          <option>Current Location</option>
-          <option>City Center</option>
-          <option>North District</option>
-        </select>
+        <Link to="/new/post">AddPost</Link>
+        <Link to="/post">AllPosts</Link>
         <Link to="/chat">Chat</Link>
         <div className="dropdown">
           Profile
           <div className="dropdown-content">
-            <Link to="/profile">View Profile</Link>
             <Link to="/myposts">My Posts</Link>
             <Link to="/trustscore">Trust Score</Link>
-            <Link to="/settings">Settings</Link>
-            <Link to="/logout">Logout</Link>
+            <Link to="/login">Login</Link>
+            <Link to = "/signup">Signup</Link>
           </div>
         </div>
       </div>
