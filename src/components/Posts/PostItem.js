@@ -31,6 +31,7 @@ const PostItem = () => {
     // send data to firebase
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(currentUser)
         if (!currentUser.userId) {
             console.error('No user linked to this post');
             return;
