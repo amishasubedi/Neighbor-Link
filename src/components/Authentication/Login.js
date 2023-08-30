@@ -6,7 +6,7 @@ import { useAuth } from './AuthContext';
 import './Login.css';
 
 const Login = () => {
-    const { setIsLoggedIn } = useAuth();
+    const { setIsLoggedIn, setCurrentUser } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,13 +22,13 @@ const Login = () => {
 
         onValue(userRef, (snapshot) => {
             const users = snapshot.val();
-            
             const user = Object.values(users).find(user => user.email === email);
 
             if (user && user.password === password) { 
                 console.log("Logged in:", user);
                 
                 setIsLoggedIn(true);
+                setCurrentUser(user);
                 setEmail('');
                 setPassword('');
 

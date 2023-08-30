@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
-import { ref, push } from 'firebase/database';
+import React, { useState, useEffect } from 'react';
+import { ref,push, set,  onValue } from 'firebase/database';
 import { database } from '../../dbConfig';
 
 import './PostItem.css';  
+import { useAuth } from '../Authentication/AuthContext';  
 
 const PostItem = () => {
+    const { currentUser } = useAuth();
     const [postData, setPostData] = useState({
         title: '',
-        content: ''
+        content: '',
+        userId: currentUser?.userId || null,
+        username: currentUser?.name || null
     });
+
+    console.log("Current user stored in context hook: " + currentUser.name) // milyo
+
+    useEffect(() => {
+        if (currentUser.name && currentUser.userId) {
+            setPostData(prevData => ({ ...prevData, userId: currentUser.userId, username:currentUser.name }));
+        }
+    }, [currentUser]);
+    
+    
 
     const handleChange = (e) => {
         setPostData({ ...postData, [e.target.name]: e.target.value });
@@ -17,17 +31,47 @@ const PostItem = () => {
     // send data to firebase
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const postsRef = ref(database, 'posts');
-            await push(postsRef, postData);
-            console.log('Post sent to Firebase:', postData);
-            setPostData({ title: '', content: '' });
-        } catch (error) {
-            console.error('Error sending post to Firebase:', error);
+        if (!currentUser.userId) {
+            console.error('No user linked to this post');
+            return;
         }
+    
+        console.log('Submitting post...');
+        
+        // Fetch the user's username based on userId from the users database
+        const usersRef = ref(database, 'users');
+        onValue(usersRef, (snapshot) => {
+            const users = snapshot.val();
+            const user = Object.values(users).find((user) => user.userId === postData.userId);
+    
+            if (user) {
+                console.log('User found:', user);
+    
+                try {
+                    const postsRef = ref(database, 'posts');
+                    const newPostRef = push(postsRef);
+                
+                    const newPostData = {
+                        ...postData,
+                        username: user.name // Add the username to the post data
+                    };
+                
+                    set(newPostRef, newPostData);
+                    console.log('Post sent to Firebase:', newPostData);
+                    setPostData({ title: '', content: '', userId: postData.userId });
+                } catch (error) {
+                    console.error('Error sending post to Firebase:', error);
+                }
+                
+            } else {
+                console.error('User not found in database');
+            }
+        });
     };
     
-
+    
+    
+    
     return (
         <div>
             <h2>Create a New Post</h2>
@@ -52,7 +96,7 @@ const PostItem = () => {
                         onChange={handleChange} 
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
         </div>
     );
