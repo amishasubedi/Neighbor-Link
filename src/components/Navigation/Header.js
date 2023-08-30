@@ -21,6 +21,7 @@ const Header = () => {
           <div className="dropdown-content">
             {isLoggedIn && <Link to="/myposts">My Posts</Link>}
             {isLoggedIn && <Link to="/trustscore">Trust Score</Link>}
+            {isLoggedIn && <Link to="/myprofile">My Profile</Link>}
             {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
             {!isLoggedIn && <Link to="/login">Login</Link>}
             {!isLoggedIn && <Link to="/signup">Signup</Link>}

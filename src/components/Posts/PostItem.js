@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ref,push, set,  onValue } from 'firebase/database';
+import {ref, push, set, onValue, update } from 'firebase/database';
 import { database } from '../../dbConfig';
 
 import './PostItem.css';  
@@ -13,6 +13,7 @@ const PostItem = () => {
         userId: currentUser?.userId || null,
         username: currentUser?.name || null
     });
+
 
     console.log("Current user stored in context hook: " + currentUser.name) // milyo
 
@@ -58,9 +59,22 @@ const PostItem = () => {
                     };
                 
                     set(newPostRef, newPostData);
-                    console.log('Post sent to Firebase:', newPostData);
-                    alert("Post Successfully created");
-                    setPostData({ title: '', content: '', userId: postData.userId });
+                    try {
+                        // ... (previous code)
+                        set(newPostRef, newPostData);
+                    
+                        // Update the user's trust score in the database
+                        const currentUserRef = ref(database, `users/${postData.userId}`);
+                        update(currentUserRef, {
+                            trustScore: user.trustScore + 2 // Increment trustScore by 2
+                        });
+                    
+                        console.log('Post sent to Firebase:', newPostData);
+                        alert('Congratulations, You earned 2 points');
+                        setPostData({ title: '', content: '', userId: postData.userId });
+                    } catch (error) {
+                        console.error('Error sending post to Firebase:', error);
+                    }
                 } catch (error) {
                     console.error('Error sending post to Firebase:', error);
                 }

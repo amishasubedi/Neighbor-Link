@@ -12,7 +12,7 @@ import PostList from './components/Posts/PostList';
 import Login from './components/Authentication/Login';
 import Signup from './components/Authentication/signup';
 import { AuthProvider } from './components/Authentication/AuthContext';
-import TrustScore from './pages/TrustScore';
+import TrustScore from './components/TrustScore/TrustScore';
 import MyPosts from './components/Posts/MyPosts';
 
 function App() {

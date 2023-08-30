@@ -1,6 +1,6 @@
 import React from 'react';
-import './Homepage.css';
-import { useAuth } from '../components/Authentication/AuthContext';
+import './TrustScore.css';
+import { useAuth } from '../Authentication/AuthContext';
 
 const TrustScore = () => {
 
