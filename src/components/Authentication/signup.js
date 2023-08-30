@@ -30,7 +30,8 @@ const Signup = () => {
         try {
             await set(newUserRef, {
                 name: userData.name,
-                email: userData.email
+                email: userData.email,
+                password: userData.password
             });
             alert('User registered successfully');
             setUserData({ name: '', email: '', password: '' }); // Reset the form
