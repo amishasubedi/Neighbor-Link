@@ -65,3 +65,52 @@ footer {
     text-align: center;
     background-color: #f7f7f7;
 }
+
+.trust-score-container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.hero-section {
+    background: linear-gradient(to bottom, #1a2a6c, #3f529c);
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.trust-score-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.trust-score-intro {
+    flex: 1;
+    padding: 20px;
+}
+
+.intro-text {
+    margin-bottom: 20px;
+}
+
+
+.trust-score-details {
+    flex: 1;
+    padding: 20px;
+}
+
+.earn-points-container {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.trust-score-rules {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}

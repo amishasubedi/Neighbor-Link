@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, get} from 'firebase/database';
+import { getDatabase, ref, onValue} from 'firebase/database';
 import './PostList.css';
 
 const PostList = () => {
