@@ -59,6 +59,7 @@ const PostItem = () => {
                 
                     set(newPostRef, newPostData);
                     console.log('Post sent to Firebase:', newPostData);
+                    alert("Post Successfully created");
                     setPostData({ title: '', content: '', userId: postData.userId });
                 } catch (error) {
                     console.error('Error sending post to Firebase:', error);

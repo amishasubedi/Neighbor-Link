@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <div className="header">
-      <Link to="/" className="logo">CommuneLink</Link>
+      <Link to="/" className="logo">Neighbor-Link</Link>
       <div className="nav-items">
         {isLoggedIn && <Link to="/new/post">AddPost</Link>}
         <Link to="/post">AllPosts</Link>

@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, update, get} from 'firebase/database';
 import './PostList.css';
 import { useAuth } from '../Authentication/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
     const {currentUser} = useAuth();
     const [likedPosts, setLikedPosts] = useState([]);
+
+    const navigate = useNavigate();
+
+    
 
     useEffect(() => {
         const db = getDatabase();
@@ -36,6 +41,7 @@ const PostList = () => {
     // Load liked posts for the current user
     useEffect(() => {
         if (currentUser) {
+            console.log("Here current user exists")
             const db = getDatabase();
             const userLikesRef = ref(db, `users/${currentUser.userId}/likes`);
             
@@ -44,6 +50,9 @@ const PostList = () => {
                 const likedPostsList = likedPostsData ? Object.keys(likedPostsData) : [];
                 setLikedPosts(likedPostsList);
             });
+        } else {
+             console.log("does not exist");
+            // navigate('/login'); // direct navigate to login, but show posts
         }
     }, [currentUser]);
 
@@ -61,6 +70,12 @@ const PostList = () => {
 
     const handleLike = async (event, postId) => {
         event.preventDefault();
+        if (!currentUser) {
+            alert("Please login or signup to like the post")
+            navigate('/login');
+            return; 
+        }
+        //(not valid in async) event.preventDefault();
         const db = getDatabase();
         const postRef = ref(db, `posts/${postId}`);
         const currentUserRef = ref(db, `users/${currentUser.userId}`);
@@ -70,6 +85,8 @@ const PostList = () => {
                 // Fetch the current likes count of the post
                 const postSnapshot = await get(postRef);
                 const currentLikes = postSnapshot.val().likes || 0;
+
+                console.log("current likes: " + currentLikes)
         
                 // Update the likes count in the database
                 await update(postRef, {
@@ -118,9 +135,10 @@ const PostList = () => {
                         <p className="post-text">{post.content}</p>
                         <div className="post-likes">
                         <span>{post.likes || 0} likes</span>
-                        <button onClick={() => handleLike(post.id)}>
+                        <button type="button" onClick={(event) => handleLike(event, post.id)}>
                             {likedPosts.includes(post.id) ? 'Unlike' : 'Like'}
                         </button>
+
                     </div>
                     </div>
                 </div>
