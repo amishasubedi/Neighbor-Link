@@ -29,9 +29,10 @@ const PostItem = () => {
     
 
     return (
-        <div className="post-container">
+        <div>
             <h2>Create a New Post</h2>
-            <form onSubmit={handleSubmit} className="post-form">
+            <form onSubmit={handleSubmit} style={{ width: '90%', maxWidth: '1000px', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
+
                 <div className="input-group">
                     <label htmlFor="title">Title</label>
                     <input 
@@ -51,7 +52,7 @@ const PostItem = () => {
                         onChange={handleChange} 
                     />
                 </div>
-                <button type="submit" onClick={handleSubmit}>Submit</button>
+                <button type="submit">Submit</button>
             </form>
         </div>
     );

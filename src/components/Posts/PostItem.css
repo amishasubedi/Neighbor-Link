@@ -54,3 +54,13 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+form {
+    width: 90% !important;
+    /* Set to 90% of the parent container. */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
