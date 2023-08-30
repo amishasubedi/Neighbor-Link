@@ -1,0 +1,64 @@
+/* MyPosts.css */
+.post-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.post-item {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.post-text {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.post-likes {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.post-likes span {
+    font-size: 14px;
+    color: #777;
+    margin-right: 10px;
+}
+
+.post-likes button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.post-likes button:hover {
+    background-color: #c0392b;
+}
+
+.no-posts-message {
+    font-size: 18px;
+    color: #888;
+    margin-top: 20px;
+}

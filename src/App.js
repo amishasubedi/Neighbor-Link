@@ -13,6 +13,7 @@ import Login from './components/Authentication/Login';
 import Signup from './components/Authentication/signup';
 import { AuthProvider } from './components/Authentication/AuthContext';
 import TrustScore from './pages/TrustScore';
+import MyPosts from './components/Posts/MyPosts';
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path = "/trustscore" element= {<TrustScore />} />
+        </Routes>
+        <Routes>
+          <Route path = "/myposts" element= {<MyPosts />} />
         </Routes>
         </AuthProvider>
       </div>

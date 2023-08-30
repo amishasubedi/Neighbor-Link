@@ -22,17 +22,19 @@ const Signup = () => {
         e.preventDefault();
         setError(null);
 
-        
         const db = getDatabase();
         const userRef = ref(db, 'users');
         const newUserRef = push(userRef);
 
         try {
-            await set(newUserRef, {
+            const newUserData = {
                 name: userData.name,
                 email: userData.email,
-                password: userData.password
-            });
+                password: userData.password,
+                trustScore: 3 // Assign 3 points to new users by default
+            };
+
+            await set(newUserRef, newUserData);
             alert('User registered successfully');
             setUserData({ name: '', email: '', password: '' }); // Reset the form
         } catch(err) {
