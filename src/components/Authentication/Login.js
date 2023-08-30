@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { useAuth } from './AuthContext';
 
 import './Login.css';
 
 const Login = () => {
+    const { setIsLoggedIn } = useAuth();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const auth = getAuth();
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("Logged in:", user);
-        } catch (err) {
-            console.error("Error logging in:", err.message);
-            setError(err.message);
-        }
+
+        const db = getDatabase();
+        const userRef = ref(db, 'users'); 
+
+        onValue(userRef, (snapshot) => {
+            const users = snapshot.val();
+            
+            const user = Object.values(users).find(user => user.email === email);
+
+            if (user && user.password === password) { 
+                console.log("Logged in:", user);
+                setIsLoggedIn(true)
+            } else {
+                console.error("Error logging in: Invalid credentials");
+                setError("Invalid email or password");
+                setIsLoggedIn(false);
+            }
+        });
     };
+
 
    // LoginForm.js
 return (

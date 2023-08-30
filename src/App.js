@@ -8,24 +8,22 @@ import {
 import Header from './components/Navigation/Header';
 import HomePage from './pages/Homepage';
 import PostItem from './components/Posts/PostItem';
-import ChatPage from './pages/Chatpage';
 import PostList from './components/Posts/PostList';
 import Login from './components/Authentication/Login';
 import Signup from './components/Authentication/signup';
+import { AuthProvider } from './components/Authentication/AuthContext';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <AuthProvider>
         <Header />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
         </Routes>
         <Routes>
           <Route path = "/new/post" element = {<PostItem />} />
-        </Routes>
-        <Routes>
-          <Route path = "/chat" element = {<ChatPage />} />
         </Routes>
         <Routes>
           <Route exact path="/post" element={<PostList />} />
@@ -36,6 +34,7 @@ function App() {
         <Routes>
           <Route path = "/signup" element= {<Signup />} />
         </Routes>
+        </AuthProvider>
       </div>
     </BrowserRouter>
   );
