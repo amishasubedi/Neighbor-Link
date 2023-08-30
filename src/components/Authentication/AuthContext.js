@@ -10,11 +10,17 @@ export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentUser, setCurrentUser] = useState(null); // Initialize with null
 
+    const logout = () => {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+    };
+
     const value = {
         isLoggedIn,
         setIsLoggedIn,
         currentUser, // Include the currentUser state
-        setCurrentUser // Include the setCurrentUser function
+        setCurrentUser,
+        logout
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

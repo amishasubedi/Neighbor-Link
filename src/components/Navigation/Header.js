@@ -4,7 +4,11 @@ import './Header.css';
 import { useAuth } from '../Authentication/AuthContext';
 
 const Header = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout(); // from auth context
+  }
 
   return (
     <div className="header">
@@ -17,6 +21,7 @@ const Header = () => {
           <div className="dropdown-content">
             {isLoggedIn && <Link to="/myposts">My Posts</Link>}
             {isLoggedIn && <Link to="/trustscore">Trust Score</Link>}
+            {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
             {!isLoggedIn && <Link to="/login">Login</Link>}
             {!isLoggedIn && <Link to="/signup">Signup</Link>}
           </div>
